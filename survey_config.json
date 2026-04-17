@@ -1,0 +1,66 @@
+{
+    "intro_text": "Este é um estudo sobre critérios de escolha na compra de produtos de luxo de segunda mão",
+    "webhook_url": "https://script.google.com/macros/s/AKfycbzcwq4-0TOXdamJaGSDZnXnf7BLHlaBpKh2GLGYjOyCiL6_mboiYbf6-IVVT2B3WkaG/exec",
+    "supabase_url": "https://rcsnmdcickejqjbqfezl.supabase.co",
+    "supabase_key": "sb_publishable_xw-tBybIZJFMG5Cq4fxVjg_dkgRyZsl",
+    "supabase_table": "conjoint-luxo",
+    "profile_questions": [
+        {
+            "question": "Sexo",
+            "options": [
+                "Masculino",
+                "Feminino",
+                "Prefiro não responder"
+            ]
+        },
+        {
+            "question": "Sua idade",
+            "options": [
+                "Menos de 18 anos",
+                "19 a 24 anos",
+                "25 a 34 anos",
+                "35 a 44 anos",
+                "45 a 54 anos",
+                "55 anos ou mais"
+            ]
+        },
+        {
+            "question": "Renda Familiar",
+            "options": [
+                "Até 2 salários mínimo",
+                "Entre 2 e 4 salários mínimos",
+                "Entre  4 e 6 salários mínimos",
+                "Entre  6 e 10 salários mínimos",
+                "Mais de 10 salários mínimos"
+            ]
+        }
+    ],
+    "attributes": {
+        "Recomendação": [
+            "Influenciadora famosa de moda",
+            "Amigos/Conhecidos",
+            "Anúncio focado (algoritmo)"
+        ],
+        "Motivação": [
+            "Escolha sustentável",
+            "Peça única e exclusiva — achado raro",
+            "Ótimo negócio — investimento inteligente"
+        ],
+        "Certificação": [
+            "Nota Fiscal Original",
+            "Certificado de Autenticidade",
+            "Confiança na Loja/brechó"
+        ],
+        "Conservação": [
+            "Nunca usada",
+            "Excelente (sem marcas de uso)",
+            "Com marcas suaves de uso"
+        ],
+        "Desconto": [
+            "10% OFF",
+            "30% OFF",
+            "50% OFF"
+        ]
+    },
+    "forbidden": []
+}
