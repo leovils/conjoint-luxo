@@ -131,26 +131,29 @@ def render_survey():
             imp_df = st.session_state.engine.get_importance_df()
             util_df = st.session_state.engine.get_utilities_df()
             if len(imp_df) > 0:
-                st.markdown("### 🧠 O Seu Mapa de Decisao Pessoal")
-                import plotly.express as px
-                fig = px.bar(
-                    imp_df.sort_values(by="Relative Importance (%)", ascending=True), 
-                    x="Relative Importance (%)", y="Atributo", orientation='h', 
-                    title="O que mais peso teve nas suas escolhas?", color="Atributo"
-                )
-                fig.update_layout(showlegend=False)
-                st.plotly_chart(fig, use_container_width=True)
-                
-                from pdf_generator import create_user_report
-                pdf_bytes = create_user_report(imp_df, util_df)
-                
-                st.download_button(
-                    label="📥 Baixar Meu Relatorio Tecnico (PDF)",
-                    data=pdf_bytes,
-                    file_name="meu_perfil_conjoint.pdf",
-                    mime="application/pdf",
-                    type="primary"
-                )
+                if imp_df["Range Absoluto"].sum() == 0.0:
+                    st.warning("🤖 **Aviso do Sistema:** O algoritmo detectou um padrão linear excessivo (ex: selecionou sempre a mesma posição ou não variou escolhas). Não foi possível mapear matematicamente o seu padrão de conflito real. Obrigado pela participação!")
+                else:
+                    st.markdown("### 🧠 O Seu Mapa de Decisao Pessoal")
+                    import plotly.express as px
+                    fig = px.bar(
+                        imp_df.sort_values(by="Relative Importance (%)", ascending=True), 
+                        x="Relative Importance (%)", y="Atributo", orientation='h', 
+                        title="O que mais peso teve nas suas escolhas?", color="Atributo"
+                    )
+                    fig.update_layout(showlegend=False)
+                    st.plotly_chart(fig, use_container_width=True)
+                    
+                    from pdf_generator import create_user_report
+                    pdf_bytes = create_user_report(imp_df, util_df)
+                    
+                    st.download_button(
+                        label="📥 Baixar Meu Relatorio Tecnico (PDF)",
+                        data=pdf_bytes,
+                        file_name="meu_perfil_conjoint.pdf",
+                        mime="application/pdf",
+                        type="primary"
+                    )
         except Exception as e:
             st.error(f"Seus dados foram salvos. Erro visual: {e}")
             
