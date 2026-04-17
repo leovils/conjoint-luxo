@@ -40,6 +40,7 @@ if "engine" not in st.session_state:
         cfg = st.session_state.config
         st.session_state.engine = ConjointEngine(cfg["attributes"], cfg["forbidden"])
         st.session_state.intro_text = cfg.get("intro_text", "")
+        st.session_state.scenario_text = cfg.get("scenario_text", "")
         st.session_state.webhook_url = cfg.get("webhook_url", "")
         st.session_state.supabase_url = cfg.get("supabase_url", "")
         st.session_state.supabase_key = cfg.get("supabase_key", "")
@@ -49,6 +50,7 @@ if "engine" not in st.session_state:
     else:
         st.session_state.engine = None
         st.session_state.intro_text = "Bem-vindo à pesquisa! Por favor, escolha a opção que mais prefere."
+        st.session_state.scenario_text = ""
         st.session_state.webhook_url = ""
         st.session_state.supabase_url = ""
         st.session_state.supabase_key = ""
@@ -160,8 +162,13 @@ def render_survey():
         st.error("Erro da Rodada Anterior: " + st.session_state.webhook_error)
         
     cfg = st.session_state.config or {}
-    if not cfg.get("profile_questions"): st.write(st.session_state.intro_text)
-    else: st.write("Avalie as opções e escolha a que você mais prefere em cada par:")
+    scen_text = st.session_state.get("scenario_text", "")
+    if scen_text and scen_text.strip():
+        st.info(f"💡 **Atenção ao Cenário:** {scen_text}")
+    elif not cfg.get("profile_questions"): 
+        st.write(st.session_state.intro_text)
+    else: 
+        st.write("Avalie as opções e escolha a que você mais prefere em cada par:")
     
     history_len = len(st.session_state.engine.history)
     st.progress(min(history_len / 18.0, 1.0))
@@ -210,6 +217,7 @@ else:
                         elif k == "Supabase API Key": st.session_state.supabase_key = v
                         elif k == "Supabase Table": st.session_state.supabase_table = v
                         elif k == "Texto Convite": st.session_state.intro_text = v
+                        elif k == "Texto Cenário": st.session_state.scenario_text = v
                         
                 if "Aba2" in xls.sheet_names:
                     df2 = pd.read_excel(xls, "Aba2")
@@ -234,7 +242,8 @@ else:
 
         st.markdown("---")
         st.header("1. Banco de Dados e Textos")
-        st.session_state.intro_text = st.text_area("Texto de Convite", value=st.session_state.intro_text)
+        st.session_state.intro_text = st.text_area("Texto de Convite (Aba1)", value=st.session_state.intro_text)
+        st.session_state.scenario_text = st.text_area("Texto Cenário das Escolhas (Aba1)", value=st.session_state.get("scenario_text", ""))
         st.session_state.webhook_url = st.text_input("Webhook URL (Google Sheets)", value=st.session_state.webhook_url)
         st.session_state.supabase_url = st.text_input("Supabase Project URL", value=st.session_state.supabase_url)
         st.session_state.supabase_key = st.text_input("Supabase API Key (Anon)", value=st.session_state.supabase_key, type="password")
@@ -286,6 +295,7 @@ else:
                 
                 st.session_state.config = {
                     "intro_text": st.session_state.intro_text,
+                    "scenario_text": st.session_state.scenario_text,
                     "profile_questions": profile_config,
                     "attributes": attr_inputs, "forbidden": forbidden_pairs
                 }
@@ -305,6 +315,7 @@ else:
                 if valid:
                     config_data = {
                         "intro_text": st.session_state.intro_text,
+                        "scenario_text": st.session_state.scenario_text,
                         "webhook_url": st.session_state.webhook_url,
                         "supabase_url": st.session_state.supabase_url,
                         "supabase_key": st.session_state.supabase_key,

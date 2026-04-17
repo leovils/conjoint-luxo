@@ -1,5 +1,6 @@
 {
     "intro_text": "Este é um estudo sobre critérios de escolha na compra de produtos de luxo de segunda mão",
+    "scenario_text": "Imagine que você vai comprar um produto de luxo de segunda mão — uma bolsa, uma roupa ou um acessório — em um brechó físico ou online. Apresentamos abaixo dois conjuntos de critérios,  basta escolher o cojunto que reflete melhor as suas preferências. Não existe resposta certa ou errada — o que importa é a sua preferência real.",
     "webhook_url": "https://script.google.com/macros/s/AKfycbzcwq4-0TOXdamJaGSDZnXnf7BLHlaBpKh2GLGYjOyCiL6_mboiYbf6-IVVT2B3WkaG/exec",
     "supabase_url": "https://rcsnmdcickejqjbqfezl.supabase.co",
     "supabase_key": "sb_publishable_xw-tBybIZJFMG5Cq4fxVjg_dkgRyZsl",
